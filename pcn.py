@@ -307,7 +307,7 @@ elif main_tab == "Simulation":
     R = st.session_state.e*st.session_state.s*((1-st.session_state.mu)*(1-st.session_state.h)*(1-st.session_state.bc))**(st.session_state.r+1)
     for k in range(st.session_state.num_gen):
         V[k+1] = (st.session_state.m*V[k] + 0.5*(1-V[k])) / (st.session_state.m*V[k] + (1-V[k]))
-        S[k+1] = (1-st.session_state.m)*R*S[k]/(1+st.session_state.c*N[k])
+        S[k+1] = (1-st.session_state.m)*R*S[k]/(1+st.session_state.c*S[k])
         N[k+1] = (1-st.session_state.m)*R*N[k]*V[k] / (1+st.session_state.c*N[k])
     generate_main_plot(N,S,V,R)
     #generate_min_pcb()
