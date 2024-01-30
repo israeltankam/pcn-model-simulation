@@ -47,9 +47,10 @@ st.session_state.setdefault("mu", 0.10)
 st.session_state.setdefault("c", 0.4)
 st.session_state.setdefault("e", 500)
 st.session_state.setdefault("detection_threshold", 1)
-st.session_state.setdefault("num_gen", 3)
+st.session_state.setdefault("num_years", 15)
 st.session_state.setdefault("bc", 0.45)
 st.session_state.setdefault("r", 4)
+st.session_state.setdefault("num_gen", int(np.ceil(st.session_state.num_years/(st.session_state.r + 1))))
 step = 0.01
                             
 
@@ -63,7 +64,7 @@ st.session_state.setdefault("reset_mu", 0.10)
 st.session_state.setdefault("reset_c", 0.4)
 st.session_state.setdefault("reset_e", 500)
 st.session_state.setdefault("reset_detection_threshold", 1)
-st.session_state.setdefault("reset_num_gen", 3)
+st.session_state.setdefault("reset_num_years", 15)
 st.session_state.setdefault("reset_bc", 0.45)
 st.session_state.setdefault("reset_r", 4)
 
@@ -172,16 +173,15 @@ if main_tab == "Introduction":
         st.markdown("# Introduction")
         st.markdown("The pale cyst nematode, Globodera pallida, is a pest that poses a significant threat to potato crops worldwide. The most effective chemical nematicides are toxic to non-target organisms and are now banned. Alternative control methods are therefore required. Crop rotation and biological control methods have limitations for effectively managing nematodes. The use of genetically resistant cultivars is a promising alternative, but nematode populations evolve, and virulent mutants can break resistance after just a few years. Masculinizing resistances, preventing avirulent nematodes from producing females, are thought to be more durable than blocking resistances, preventing infection. Our demo-genetic model, tracking both nematode population densities and their genetic frequencies, shows that virulence against masculinizing resistance may not fix in the pest population, under realistic conditions. Avirulence may persist despite the uniform use of resistance. This is because avirulent male nematodes may transmit avirulence to their progeny by mating with virulent females. Additionally, because avirulent nematodes do not produce females themselves, they weaken the reproductive rate of the nematode population, leading to a reduction in its density by at least 20\%. This avirulence load can even lead to the collapse of the nematode population in theory. Overall, our model shows that combining masculinizing resistance, rotation, and biocontrol may achieve durable suppression of G. pallida in a reasonable time frame. Our work is supported by an online interactive interface allowing users to test their own control combinations.")    
         st.markdown("# Hightlights")
-        st.markdown("- Globodera pallida, or Pale Cyst Nematode, is a serious quarantine pest that threatens potato crops worldwide.")
-        st.markdown("- The use of resistant potato cultivars is a popular sustainable pest control measure, but the evolution of the nematode populations towards virulence can reduce the long-term effectiveness of resistance-based control.")
-        st.markdown("- Masculinizing resistance prevents avirulent nematodes from producing females, which could ultimately eliminate avirulent nematodes from the population.")
-        st.markdown("- However, tracing genotypic frequencies in real conditions shows that the long-term fixation of the virulence allele does not necessarily occur despite the selection pressure.")
-        st.markdown("- Avirulent nematodes, which are exclusively male, survive as heterozygotes by mating with virulent females, weakening the nematode's reproduction number.")
-        st.markdown("- Biocontrol efficiency required for the nematode long-term suppression is lower when masculinizing resistant plants are deployed.")
-        st.markdown("- But the biocontrol efficacy required can be so high that it is unachievable")
-        st.markdown("- Rotations are proven to be an efficient and sustainable lever of nematode control, but require long periods of cultivating non-host crops or leaving a bare soil")
-        st.markdown("- Combining resistant cultivars with biocontrol methods and rotations appears to be an effective solution for speeding up the nematode suppression.")
-        st.markdown("- The model simulated here tracks at the same time the nematode genetics and dynamics to describe selection for virulence and biocontrol+rotation size needed to achieve suppression.")
+        st.markdown("- Globodera pallida, commonly known as the Pale Cyst Nematode, poses a significant threat to potato crops on a global scale, making it a serious quarantine pest.")
+        st.markdown("- Although utilizing resistant potato cultivars is a widely accepted and sustainable pest control strategy, the continuous evolution of nematode populations towards virulence can undermine the long-term efficacy of resistance-based control methods")
+        st.markdown("- Masculinizing resistance aims to prevent avirulent nematodes from generating females, potentially leading to the elimination of avirulent nematodes from the population.")
+        st.markdown("- Despite the selection pressure, tracking genotypic frequencies in real conditions reveals that the long-term fixation of the virulence allele does not necessarily occur.")
+        st.markdown("- Avirulent nematodes, exclusively male, manage to survive as heterozygotes by mating with virulent females, thereby weakening the nematode's reproductive number.")
+        st.markdown("- The biocontrol efficcacy required for long-term nematode suppression is lower when deploying masculinizing resistant plants, but there is a potential challenge of achieving the high biocontrol efficacy needed.")
+        st.markdown("- Rotations have been established as an efficient and sustainable method for nematode control, but their implementation necessitates extended periods of cultivating non-host crops or leaving the soil bare.")
+        st.markdown("- An effective solution for expediting nematode suppression involves combining resistant cultivars with biocontrol methods and rotations.")
+        st.markdown("- The model presented in this study concurrently monitors nematode genetics and dynamics, providing insights into the selection for virulence and determining the required size of rotations and biocontrol efficacy for successful suppression.")
 
 elif main_tab == "Model & Parameters":
     st.markdown("# Model & parameters")
@@ -279,12 +279,12 @@ elif main_tab == "Simulation":
         
     with col2:
         if st.button("Reset set up"):
-            st.session_state.num_gen = st.session_state.reset_num_gen
+            st.session_state.num_years = st.session_state.reset_num_years
             st.session_state.detection_threshold = st.session_state.reset_detection_threshold
         st.markdown("### Simulation set up")
         subcol1, subcol2 = st.columns([1,1])
         with subcol1:
-            st.session_state.num_gen = st.number_input("Enter the number of generations for simulation:", min_value=1, max_value=100, value=st.session_state.num_gen, step=1)
+            st.session_state.num_years = st.number_input("Enter the number of years of simulation:", min_value=1, max_value=1000, value=st.session_state.num_years, step=1)
         with subcol2:
             st.session_state.detection_threshold = st.number_input(f"Acceptance threshold (eggs/g of soil):", min_value=1, max_value=3, value=st.session_state.detection_threshold, step=1)    
     with col3:
@@ -296,8 +296,9 @@ elif main_tab == "Simulation":
         with subcol1:
             st.session_state.bc = st.slider("Biocontrol efficacy $b$ (%):", 0.0, 100.0, st.session_state.bc*100, 1.0)/100
         with subcol2:
-            st.session_state.r = st.number_input("Rotation number", min_value=0, max_value=4, value=st.session_state.r, step=1)
+            st.session_state.r = st.number_input("Rotation number", min_value=0, max_value=14, value=st.session_state.r, step=1)
     ###############################
+    st.session_state.num_gen = int(np.ceil(st.session_state.num_years/(st.session_state.r + 1)))
     S = np.zeros(st.session_state.num_gen+1) #Susceptible
     N = np.zeros(st.session_state.num_gen+1)
     V = np.zeros(st.session_state.num_gen+1)
@@ -312,9 +313,9 @@ elif main_tab == "Simulation":
     generate_main_plot(N,S,V,R)
     #generate_min_pcb()
     col1, col2, col3 = st.columns([1, 8, 1])
-    with col2:
-        link_text = "<a href='https://nemo-simulator.streamlit.app/' style='font-size: 20px;'>For more complex scenario simulation, click here to visit the Nemo Simulator</a>"
-        st.markdown(link_text, unsafe_allow_html=True)
+    #with col2:
+    #    link_text = "<a href='https://nemo-simulator.streamlit.app/' style='font-size: 20px;'>For more complex scenario simulation, click here to visit the Nemo Simulator</a>"
+    #    st.markdown(link_text, unsafe_allow_html=True)
 elif main_tab == "Edit Parameters":
     st.markdown("# Edit Parameters")
     st.markdown("These parameters describe the basic biology of the nematode. They are retrieved from intensive literature review and cautious estimations described in the main paper.")
