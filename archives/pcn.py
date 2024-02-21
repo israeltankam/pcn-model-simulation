@@ -84,13 +84,12 @@ def minimal4(vec):
     return m
     
 def generate_main_plot(N,S,V,R):
-    # Do not plot scuscpetible 'S' in this version
     fig, ax = plt.subplots(figsize=(14, 10), dpi=100)
     nb_gen = len(N)
     d = st.session_state.detection_threshold
     ax.plot([0, nb_gen-1], [d, d], 'k--', label='Acceptance threshold')
-    #ax.plot(np.arange(0, nb_gen), S, '-r', linewidth=3, marker='o', label='Susceptible or blocking resistance')
-    ax.plot(np.arange(0, nb_gen), N, '-b', linewidth=3, marker='o', label='$v_0 =$'+str(dec2(st.session_state.v_freq*100))+'%')
+    ax.plot(np.arange(0, nb_gen), S, '-r', linewidth=3, marker='o', label='Susceptible or blocking resistance')
+    ax.plot(np.arange(0, nb_gen), N, '-b', linewidth=3, marker='o', label='Masculinizing Resistance')
     ax.set_xlabel("Time (years)", fontsize=20)
     ax.set_ylabel("Nematode population density (eggs/g of soil)", fontsize=20)
     ax.set_xlim([0, nb_gen-1])
@@ -274,7 +273,7 @@ elif main_tab == "Simulation":
         st.markdown("### Initial values")
         subcol1, subcol2 = st.columns([1,1])
         with subcol1:
-            st.session_state.v_freq = st.slider("Initial frequency of virulence $v_0$ (%):", min_value=0.0, max_value=100.0, value=st.session_state.v_freq*100, step=0.5)/100
+            st.session_state.v_freq = st.slider("Initial frequency of virulence $v_0$ (%):", min_value=0.0, max_value=100.0, value=st.session_state.v_freq*100, step=0.1)/100
         with subcol2:
             st.session_state.init_infest = st.number_input("Initial infestation $N_0$ (eggs/g of soil):", min_value=0, max_value=170, value=st.session_state.init_infest, step=1)
         
