@@ -261,7 +261,7 @@ elif main_tab == "Model & Parameters":
     | $\tau$ | Acceptance threshold | 1 egg/g of soil | [1, 3] eggs/g of soil |
     '''
     st.markdown(table_md)
-    st.markdown("The simulation allows to choose the plant breed which is deployed per season. The other parameters, very little variable and estimated on literature data, are in the Settings menu.")
+    st.markdown("The simulation allows to assess the nematode populatin dynamics when masculinizing resistant cultivars are grown and rotations and biocontrol are implemented. The other parameters, very little variable and estimated on literature data, are in the Settings menu.")
     
 elif main_tab == "Simulation":
     st.markdown("# Simulation")
@@ -314,9 +314,9 @@ elif main_tab == "Simulation":
     generate_main_plot(N,S,V,R)
     #generate_min_pcb()
     col1, col2, col3 = st.columns([1, 8, 1])
-    #with col2:
-    #    link_text = "<a href='https://nemo-simulator.streamlit.app/' style='font-size: 20px;'>For more complex scenario simulation, click here to visit the Nemo Simulator</a>"
-    #    st.markdown(link_text, unsafe_allow_html=True)
+    with col2:
+        link_text = "<a href='https://nemo-simulator.streamlit.app/' style='font-size: 20px;'>To simulate complex alternation between Masculinizing resistant cultivars, susceptible cultivars and non-host crops, click here to visit the Nemo Simulator</a>"
+        st.markdown(link_text, unsafe_allow_html=True)
 elif main_tab == "Edit Parameters":
     st.markdown("# Edit Parameters")
     st.markdown("These parameters describe the basic biology of the nematode. They are retrieved from intensive literature review and cautious estimations described in the main paper.")
