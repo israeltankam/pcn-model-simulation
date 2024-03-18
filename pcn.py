@@ -313,10 +313,10 @@ elif main_tab == "Simulation":
         N[k+1] = (1-st.session_state.m)*R*N[k]*V[k] / (1+st.session_state.c*N[k])
     generate_main_plot(N,S,V,R)
     #generate_min_pcb()
-    col1, col2, col3 = st.columns([1, 8, 1])
-    with col2:
-        link_text = "<a href='https://nemo-simulator.streamlit.app/' style='font-size: 20px;'>To simulate complex alternation between Masculinizing resistant cultivars, susceptible cultivars and non-host crops, click here to visit the Nemo Simulator</a>"
-        st.markdown(link_text, unsafe_allow_html=True)
+    #col1, col2, col3 = st.columns([1, 8, 1])
+    #with col2:
+    #    link_text = "<a href='https://nemo-simulator.streamlit.app/' style='font-size: 20px;'>To simulate complex alternation between Masculinizing resistant cultivars, susceptible cultivars and non-host crops, click here to visit the Nemo Simulator</a>"
+    #    st.markdown(link_text, unsafe_allow_html=True)
 elif main_tab == "Edit Parameters":
     st.markdown("# Edit Parameters")
     st.markdown("These parameters describe the basic biology of the nematode. They are retrieved from intensive literature review and cautious estimations described in the main paper.")
