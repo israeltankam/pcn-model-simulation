@@ -149,13 +149,14 @@ def main():
     st.markdown("<hr>", unsafe_allow_html=True)
         
     
-    col1, col2, _ = st.columns([2, 10, 5])
+    col1, col2 = st.columns([8,12])
     
     ##################################################################################################
-    with col2:
-        # plotting
-        theta , _ = yieldOptimizer(st.session_state)
+    # plotting
+    theta , _ = yieldOptimizer(st.session_state)
+    with col1:
         displayOptimal(theta, st.session_state)
+    with col2:
         displayDiseaseDynamics(theta, st.session_state)
     
 ###################################################################################
