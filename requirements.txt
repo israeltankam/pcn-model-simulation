@@ -1,2 +1,3 @@
 matplotlib
 hydralit_components
+scipy
