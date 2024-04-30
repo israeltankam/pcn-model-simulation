@@ -42,7 +42,7 @@ main_tab= hc.nav_bar(
 
 # Plant A parameters
 st.session_state.setdefault("alpha_A", 0.01)  # Acquisition rate
-st.session_state.setdefault("beta_A", 0.02)  # Inoculation rate
+st.session_state.setdefault("beta_A", 0.01)  # Inoculation rate
 st.session_state.setdefault("yield_healthy_A", 40.0) # Average yield when healthy
 st.session_state.setdefault("yield_diseased_A", 21.0) # Average yield when diseased
 st.session_state.setdefault("gamma_A", 0.05)  # Latency speed
