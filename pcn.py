@@ -38,7 +38,7 @@ main_tab= hc.nav_bar(
 
 
 # Define default parameter values
-st.session_state.setdefault("init_infest", 100)
+st.session_state.setdefault("init_infest", 1)
 st.session_state.setdefault("s", 0.25)
 st.session_state.setdefault("m", 0.35)
 st.session_state.setdefault("v_freq", 1/(2*(1-st.session_state.m)))
@@ -47,15 +47,15 @@ st.session_state.setdefault("mu", 0.10)
 st.session_state.setdefault("c", 0.4)
 st.session_state.setdefault("e", 500)
 st.session_state.setdefault("detection_threshold", 1)
-st.session_state.setdefault("num_years", 15)
-st.session_state.setdefault("bc", 0.45)
+st.session_state.setdefault("num_years", 5)
+st.session_state.setdefault("bc", 0.0)
 st.session_state.setdefault("r", 4)
 st.session_state.setdefault("num_gen", int(np.ceil(st.session_state.num_years/(st.session_state.r + 1))))
 step = 0.01
                             
 
 # Define parameter values for reset
-st.session_state.setdefault("reset_init_infest", 100)
+st.session_state.setdefault("reset_init_infest", 1)
 st.session_state.setdefault("reset_s", 0.25)
 st.session_state.setdefault("reset_m", 0.35)
 st.session_state.setdefault("reset_v_freq", 1/(2*(1-st.session_state.reset_m)))
